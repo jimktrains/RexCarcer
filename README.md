@@ -1,6 +1,7 @@
 # Poirot
 
-FreeBSD Jail Manager and Cluster Manager
+FreeBSD Jail Manager and Cluster Manager. Provides ways to provisions jails
+but also share services and DNS across them.
 
 ## Example:
 public-docs.poirot
