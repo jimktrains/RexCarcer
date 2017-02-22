@@ -1,4 +1,8 @@
-# Example:
+# Poirot
+
+FreeBSD Jail Manager and Cluster Manager
+
+## Example:
 public-docs.poirot
 
     BASE https://example.com/freebsd/FreeBSD-11-REALSE
@@ -18,7 +22,7 @@ internal-renderer.poirot
     # SRV record will be placed in cluster DNS
     SERVICE renderer PORT 1234
 
-Jailer Services:
+## Jailer Services:
   * etcd
   * skydns
   * peroit master
@@ -26,7 +30,7 @@ Jailer Services:
   * rsyslog
   * ntpd
 
-Jail Config files
+## Jail Config files
   * /etc/resolv.conf - points ot skydns for this cluster in the jailer
   * /etc/rc.d/netconf - IP, hostname
   * /etc/rc.d/envvars - any environment variables
@@ -35,7 +39,7 @@ Jail Config files
   * /etc/ssl/peroit-cluster.crt - This cluster's CA
   * /etc/rsyslog - Points to the rsyslog server in the jailer
 
-Bringing up a jail
+## Bringing up a jail
   * Check if JAIL exists, if not:
     * Bring up base
     * ZFS clone base
