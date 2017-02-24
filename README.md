@@ -44,9 +44,9 @@ internal-renderer.poirot
   * Check if JAIL exists, if not:
     * Bring up base
     * ZFS clone base
-    * Provision
-    * ZFS snapshot jail
+    * ZFS apply snapshot
   * ZFS clone jail
+  * Provision
   * Assign IP using etcd to get correct subnet and available id for CA
   * Create configs
   * Start jail
