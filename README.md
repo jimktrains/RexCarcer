@@ -1,10 +1,10 @@
-# Poirot
+# RexCarcer
 
 FreeBSD Jail Manager and Cluster Manager. Provides ways to provisions jails
 but also share services and DNS across them.
 
 ## Example:
-public-docs.poirot
+public-docs.rex
 
     BASE https://example.com/freebsd/FreeBSD-11-REALSE
     PROVISION RUN pkg install nginx
@@ -15,7 +15,7 @@ public-docs.poirot
     HOSTNAME docs.example.com
     IP 8.8.8.8/24
 
-internal-renderer.poirot
+internal-renderer.rex
 
     BASE https://example.com/freebsd/FreeBSD-11-REALSE
     PROVISION RUN ...
