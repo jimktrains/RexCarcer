@@ -24,9 +24,9 @@ internal-renderer.rex
     SERVICE renderer PORT 1234
 
 ## Jailer Services:
-  * etcd
-  * skydns
-  * peroit master
+  * etcd (eventually)
+  * skydns (eventually)
+  * unbound (right now)
   * ZFS
   * rsyslog
   * ntpd
@@ -35,19 +35,30 @@ internal-renderer.rex
   * /etc/resolv.conf - points ot skydns for this cluster in the jailer
   * /etc/rc.d/netconf - IP, hostname
   * /etc/rc.d/envvars - any environment variables
-  * /etc/ssl/peroit-host.key - This host's TLS key
-  * /etc/ssl/peroit-host.crt - This host's TLS cert 
-  * /etc/ssl/peroit-cluster.crt - This cluster's CA
+  * /etc/ssl/rc/host.key - This host's TLS key
+  * /etc/ssl/rc/host.crt - This host's TLS cert 
+    * Probably will be chained via the user's cert
+  * /etc/ssl/rc/cluster.crt - This cluster's CA
   * /etc/rsyslog - Points to the rsyslog server in the jailer
+    * Could this be static and point to the host `logger`?
 
 ## Bringing up a jail
   * Check if JAIL exists, if not:
     * Bring up base
     * ZFS clone base
-    * ZFS apply snapshot
+    * rsync snapshot and metadata
+      * maybe zsync to lighten the load on servers?
+    * verify snapshot
+      * hfile=`mktemp`
+        fp=`openssl x509 -in "$(whoami)s Sign Key.crt" -fingerprint -sha256 -noout | sed 's~SHA256 Fingerprint=~~' | sed 's~:~~g'`
+        openssl dgst -sha256 snapshots/FreeBSD-11-RELEASE.zfs.bz2 snapshots/FreeBSD-11-RELEASE.base > $hfile
+        openssl dgst -sha256 -sign "$(whoami)s Sign Key.key" -out snapshots/FreeBSD-11-RELEASE.sha256sig.$fp $hfile
+        openssl dgst -sha256 -verify  <(openssl x509 -in "$(whoami)s Sign Key.crt"  -pubkey -noout) -signature snapshots/FreeBSD-11-RELEASE.sha256sig.$fp  $hfile
+    * ZFS recieve snapshot
+      * bzcat snapshots/FreeBSD-11-RELEASE.zfs.bz2 | zfs recieve
   * ZFS clone jail
   * Provision
-  * Assign IP using etcd to get correct subnet and available id for CA
+  * Assign IP using flock to get correct subnet and available id for CA
   * Create configs
   * Start jail
-  * Public IP and SERVICE and/or HOSTNAME to etcd for skydns
+  * Public IP and SERVICE and/or HOSTNAME to unbound local-data / reload unbound
