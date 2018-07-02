@@ -13,3 +13,5 @@ openssl ca \
   -days 3650 -notext \
   -in $user_csr \
   -out $user_crt
+
+cat $ca_cert >> $user_crt

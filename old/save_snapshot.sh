@@ -22,3 +22,7 @@ echo "base=$base" > $snapshot_meta
 hfile=`mktemp`
 openssl dgst -sha256 -out $hfile $snapshot_file $snapshot_meta
 openssl dgst -sha256 -sign $sig_key -out $snapshot_sig $hfile
+
+zsyncmake -u $snapshot_file $snapshot_file
+zsyncmake -u $snapshot_meta $snapshot_meta
+zsyncmake -u $snapshot_sig $snapshot_sig

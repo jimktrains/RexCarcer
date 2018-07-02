@@ -1,4 +1,4 @@
-# RexCarcer
+# RexCarexcer
 
 FreeBSD Jail Manager and Cluster Manager. Provides ways to provisions jails
 but also share services and DNS across them.
@@ -11,7 +11,7 @@ public-docs.rex
     PROVISION COPY ./public /var/www
     PROVISION COPY nginx.conf /usr/local/etc/nginx/nginx.conf
     # Bind to a public IP associated with this box
-    # A and SRV record will be placed in cluster DNS
+    # A record will be placed in cluster DNS
     HOSTNAME docs.example.com
     IP 8.8.8.8/24
 
@@ -33,12 +33,12 @@ internal-renderer.rex
 
 ## Jail Config files
   * /etc/resolv.conf - points ot skydns for this cluster in the jailer
-  * /etc/rc.d/netconf - IP, hostname
-  * /etc/rc.d/envvars - any environment variables
-  * /etc/ssl/rc/host.key - This host's TLS key
-  * /etc/ssl/rc/host.crt - This host's TLS cert 
+  * /etc/rexc.d/netconf - IP, hostname
+  * /etc/rexc.d/envvars - any environment variables
+  * /etc/ssl/rexc/host.key - This host's TLS key
+  * /etc/ssl/rexc/host.crt - This host's TLS cert 
     * Probably will be chained via the user's cert
-  * /etc/ssl/rc/cluster.crt - This cluster's CA
+  * /etc/ssl/rexc/cluster.crt - This cluster's CA
   * /etc/rsyslog - Points to the rsyslog server in the jailer
     * Could this be static and point to the host `logger`?
 
