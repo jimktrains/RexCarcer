@@ -1,0 +1,24 @@
+#!/bin/sh
+
+echo $@
+orgdn=$1
+netdn=$2
+jaildn=$3
+
+ula_prefix=fc
+org_prefix=`echo -n $orgdn | \
+  openssl dgst -md5 | \
+  cut -d ' ' -f 2 | \
+  sed 's/^\(..\)\(....\)\(....\)\(....\).*/\1:\2:\3:\4:/' | \
+  tr -d '\r\n'`
+net_prefix=`echo -n $netdn | \
+  openssl dgst -md5 | \
+  cut -d ' ' -f 2 | \
+  sed 's/^\(....\)\(....\).*/\1:\2:/' | \
+  tr -d '\r\n'`
+jail_prefix=`echo -n $jaildn | \
+  openssl dgst -md5 | \
+  cut -d ' ' -f 2 | \
+  sed 's/^\(....\)\(....\).*/\1:\2/' | \
+  tr -d '\r\n'`
+echo "${ula_prefix}${org_prefix}${net_prefix}${jail_prefix}/48"
