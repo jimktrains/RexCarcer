@@ -1,0 +1,3 @@
+# Rex Carcer
+
+Simple jail-builder with a similar feel to `Dockerfile`s.

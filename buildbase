@@ -1,0 +1,15 @@
+#!/bin/sh
+
+. ./rex.conf
+
+IMG_NAME=`uname -sr|tr ' ' -`
+
+JAILDIR=$POOL/$IMG_NAME
+
+if [ -d $JAILDIR ]; then
+  echo "$JAILDIR exists"
+  exit 1
+fi
+zfs create $JAILDIR
+echo bsdinstall jail $JAILDIR
+zfs snapshot -r $IMG_NAME
